@@ -7,14 +7,13 @@ function Player(x, y, money) {
     this.bullets = [];
     this.money = money;
 
-    this.show = (fill) => {
+    this.show = () => {
         fill(this.x, this.y, this.size, this.size, "#ffffff");
     }
 
-    this.shoot = (fill, path) => {
-        console.log(this.bullets);
+    this.shoot = (path) => {
         if(this.bullets.length < 15) {
-            this.bullets.push(new Bullet(this.x, this.y, fill, path, this.updateBullets));
+            this.bullets.push(new Bullet(this.x, this.y, path, this.updateBullets));
         }
     }
 
@@ -49,11 +48,11 @@ function Player(x, y, money) {
 
 }
 
-function Bullet(x, y, showFn, path, deleteSelf) {
+function Bullet(x, y, path, deleteSelf) {
     this.x = x;
     this.y = y;
     this.show = () => {
-        showFn(this.x, this.y, 5, 5, "#fff");
+        fill(this.x, this.y, 5, 5, "#fff");
     }
     this.update = () => {
         if(this.x < 0 || this.x > widthBound - 5 || this.y > heightBound - 5 || this.y < 0) {

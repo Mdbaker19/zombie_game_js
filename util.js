@@ -3,6 +3,11 @@ const cc = c.getContext("2d");
 const widthBound = c.width;
 const heightBound = c.height;
 
+function fill(x, y, w, h, c) {
+    cc.fillStyle = c;
+    cc.fillRect(x, y, w, h);
+}
+
 const rayCastLine = (playerX, playerY, clickX, clickY) => {
     let xDiff = clickX - playerX;
     let yDiff = clickY - playerY;
@@ -17,6 +22,12 @@ function trimNumber(number) {
     let len = str.length;
     if(len > 2) return parseFloat(str.substring(0, len - 1));
     return number;
+}
+
+function evalDis(zX, zY, pX, pY){
+    let a = Math.abs(zY - pY);
+    let b = Math.abs(zX - pX);
+    return parseFloat((Math.sqrt((a**2) + (b**2))).toFixed(2));
 }
 
 function getRandomZombieSpawnLocationOOB(){
