@@ -6,14 +6,15 @@ function Zombie(x, y) {
     this.range2 = 100;
     this.range3 = 100;
     this.range4 = 100;
+    this.size = 10;
     this.reEval = false;
 
     this.show = () => {
-        fill(this.x, this.y, 10, 10, "#57c90e");
-        fill(this.x - 5, this.y - 3, 20, 2, "#57c90e");
-        fill(this.x + 1, this.y - 12, 8, 8, "#57c90e");
-        fill(this.x + 2, this.y - 10, 2, 2, "#e0082c");
-        fill(this.x + 7, this.y - 10, 2, 2, "#e0082c");
+        fill(this.x, this.y, this.size, this.size, "#57c90e");
+        fill(this.x - this.size / 2, this.y - 3, this.size * 2, this.size / 5, "#57c90e");
+        fill(this.x + 1, this.y - this.size - this.size / 5, this.size - 2, this.size - 2, "#57c90e");
+        fill(this.x + this.size / 5, this.y - this.size, this.size / 5, this.size / 5, "#e0082c");
+        fill(this.x + 7, this.y - this.size, this.size / 5, this.size / 5, "#e0082c");
     }
 
     this.update = () => {

@@ -11,12 +11,18 @@ function fill(x, y, w, h, c) {
 const rayCastLine = (playerX, playerY, clickX, clickY) => {
     let xDiff = clickX - playerX;
     let yDiff = clickY - playerY;
+    let slope1 = yDiff / xDiff;
+    let slope2 = xDiff / yDiff;
+    // console.log(slope);
     return {
         xRise: trimNumber(xDiff),
+        // xRise: slope2,
+        // yRise: slope1
         yRise: trimNumber(yDiff)
     }
 }
 // not enough to slow the bullet down properly based off rayCast line fn call
+// the line is off and speed is crazy variant right now too...
 function trimNumber(number) {
     let str = number.toString();
     let len = str.length;
@@ -59,4 +65,46 @@ function getRandomZombieSpawnLocationOOB(){
         xSpawn: xPosLeft,
         ySpawn: yPosBottom
     }
+}
+
+function removeBullet(bulletArr, bulletID) {
+    for(let i = bulletArr.length - 1; i >= 0; i--) {
+        if(bulletArr[i].id === bulletID) bulletArr.splice(i, 1);
+    }
+    return bulletArr;
+}
+
+// probably not necessary but the bullet thing was really annoying
+function genRanId() {
+    let output = "";
+    const options = "a_-+=)(*098bcdASDefg!@#123hijREWkl$%^456mnoQAZ7&pqr,.<>sCVBtu;:vw[xy]{}z|".split("");
+    for(let i = 0; i < 10; i++) {
+        let ran = Math.random();
+        let ranIdx = ~~(Math.random() * options.length);
+        output += options[ranIdx] + ran.toFixed(3);
+    }
+    return output;
+}
+
+// this....
+function keepValue(objOne, objTwo) {
+    if(objOne.value === 0 || objTwo.value === 0) return 3;
+    let x, y;
+    // if(objOne.data === "x") {
+        x = objOne.value;
+        y = objTwo.value;
+    // } else {
+    //     y = objOne.value;
+    //     x = objTwo.value;
+    // }
+    if(x > 0 && y < 0) return (x / y) * -1;
+    if(x < 0 && y > 0) return (x / y) * -1;
+    return x / y;
+}
+
+// yeah i doubt this works right now
+function contact(hitX, hitY, hitBoxSize, objX, objY, objSize) {
+    let topToBottomContact = objY > hitY && objY < hitY + hitBoxSize;
+    return (objX < hitX + hitBoxSize && topToBottomContact) ||
+           (objX + objSize > hitX && objX + objSize < hitX + hitBoxSize && topToBottomContact);
 }
