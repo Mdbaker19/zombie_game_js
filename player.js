@@ -8,7 +8,9 @@ function Player(x, y, money) {
     this.money = money;
 
     this.show = () => {
-        fill(this.x, this.y, this.size, this.size, "#ffffff");
+        fill(this.x, this.y, this.size, this.size, "#bea082");
+        fill(this.x + this.size / 4, this.y + this.size, this.size / 2, this.size, "#2dd7c6");
+        fill(this.x, this.y + this.size * 2, this.size, this.size / 4, "#6e4d4d");
     }
 
     this.shoot = (path) => {
@@ -30,7 +32,7 @@ function Player(x, y, money) {
                 }
                 break;
             case "Down":
-                if(this.y < heightBound - this.size) {
+                if(this.y < heightBound - this.size * 2.5) {
                     this.y += this.speed;
                 }
                 break;
@@ -53,17 +55,21 @@ function Bullet(x, y, path, deleteSelf) {
     this.x = x;
     this.y = y;
     this.id = genRanId();
+    // if xRise or yRise starts + keep + and keep - if - ... can not figure this out right now..
+    this.xSpeed = keepValue({value: path.xRise, data: "x"}, {value: path.yRise, data: "y"});
+    this.ySpeed = keepValue({value: path.yRise, data: "y"}, {value: path.xRise, data: "x"});
     this.show = () => {
-        fill(this.x, this.y, 5, 5, "#fff");
+        fill(this.x, this.y, 5, 5, "#ebcb87");
     }
     this.update = () => {
         if(this.x < 0 || this.x > widthBound - 5 || this.y > heightBound - 5 || this.y < 0) {
-            console.log("bullet off screen.. remove it");
+            // console.log("bullet off screen.. remove it");
             deleteSelf(this.id);
             return true;
         }
         this.x += path.xRise;
+        // this.x += this.xSpeed;
         this.y += path.yRise;
+        // this.y += this.ySpeed;
     }
-
 }

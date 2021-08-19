@@ -39,6 +39,7 @@
         })
     }
 
+    // diff function as it is called at a different frame rate
     function updateZombieBrains() {
         zombiesArr.forEach(zombie => {
             learn(zombie, player)
