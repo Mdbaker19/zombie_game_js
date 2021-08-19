@@ -12,13 +12,14 @@ function Player(x, y, money) {
     }
 
     this.shoot = (path) => {
+        console.log(this.bullets);
         if(this.bullets.length < 15) {
             this.bullets.push(new Bullet(this.x, this.y, path, this.updateBullets));
         }
     }
 
-    this.updateBullets = () => {
-        this.bullets.shift();
+    this.updateBullets = (id) => {
+        removeBullet(this.bullets, id);
     }
 
     this.move = (dir) => {
@@ -51,15 +52,18 @@ function Player(x, y, money) {
 function Bullet(x, y, path, deleteSelf) {
     this.x = x;
     this.y = y;
+    this.id = genRanId();
     this.show = () => {
         fill(this.x, this.y, 5, 5, "#fff");
     }
     this.update = () => {
         if(this.x < 0 || this.x > widthBound - 5 || this.y > heightBound - 5 || this.y < 0) {
             console.log("bullet off screen.. remove it");
-            deleteSelf();
+            deleteSelf(this.id);
+            return true;
         }
         this.x += path.xRise;
         this.y += path.yRise;
     }
+
 }

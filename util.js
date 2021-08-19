@@ -11,6 +11,8 @@ function fill(x, y, w, h, c) {
 const rayCastLine = (playerX, playerY, clickX, clickY) => {
     let xDiff = clickX - playerX;
     let yDiff = clickY - playerY;
+    let slope = yDiff / xDiff;
+    // console.log(slope);
     return {
         xRise: trimNumber(xDiff),
         yRise: trimNumber(yDiff)
@@ -59,4 +61,23 @@ function getRandomZombieSpawnLocationOOB(){
         xSpawn: xPosLeft,
         ySpawn: yPosBottom
     }
+}
+
+function removeBullet(bulletArr, bulletID) {
+    for(let i = bulletArr.length - 1; i >= 0; i--) {
+        if(bulletArr[i].id === bulletID) bulletArr.splice(i, 1);
+    }
+    return bulletArr;
+}
+
+// probably not necessary but the bullet thing was really annoying
+function genRanId() {
+    let output = "";
+    const options = "abcdefghijklmnopqrstuvwxyz".split("");
+    for(let i = 0; i < 10; i++) {
+        let ran = Math.random() * 10;
+        let ranIdx = ~~(Math.random() * options.length);
+        output += options[ranIdx] + ran.toFixed(3);
+    }
+    return output;
 }
