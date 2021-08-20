@@ -3,8 +3,11 @@ function Player(x, y, money) {
     this.x = x;
     this.y = y;
     this.size = 15;
+    this.health = 50;
     this.speed = 5;
     this.bullets = [];
+    this.helpers = [];
+    this.storage = {}; // possibly for fences to build, weapons to switch from, maybe combine bullets, helpers into it
     this.money = money;
 
     this.show = () => {
@@ -20,8 +23,20 @@ function Player(x, y, money) {
         }
     }
 
+    this.build = () => {
+        if(this.money > 10) {
+            this.money -= 10;
+            this.helpers.push(new Turret(this.x + this.size / 3, this.y + this.size, 10, 1, this.updateHelpers));
+        }
+        // console.log(this.helpers);
+    }
+
     this.updateBullets = (id) => {
-        removeBullet(this.bullets, id);
+        removeObj(this.bullets, id);
+    }
+
+    this.updateHelpers = (id) => {
+        removeObj(this.helpers, id);
     }
 
     this.move = (dir) => {
@@ -49,27 +64,4 @@ function Player(x, y, money) {
         }
     }
 
-}
-
-function Bullet(x, y, path, deleteSelf) {
-    this.x = x;
-    this.y = y;
-    this.id = genRanId();
-    // if xRise or yRise starts + keep + and keep - if - ... can not figure this out right now..
-    this.xSpeed = keepValue({value: path.xRise, data: "x"}, {value: path.yRise, data: "y"});
-    this.ySpeed = keepValue({value: path.yRise, data: "y"}, {value: path.xRise, data: "x"});
-    this.show = () => {
-        fill(this.x, this.y, 5, 5, "#ebcb87");
-    }
-    this.update = () => {
-        if(this.x < 0 || this.x > widthBound - 5 || this.y > heightBound - 5 || this.y < 0) {
-            // console.log("bullet off screen.. remove it");
-            deleteSelf(this.id);
-            return true;
-        }
-        this.x += path.xRise;
-        // this.x += this.xSpeed;
-        this.y += path.yRise;
-        // this.y += this.ySpeed;
-    }
 }

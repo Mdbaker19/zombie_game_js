@@ -13,11 +13,22 @@
     <canvas id="game" width="900" height="900"></canvas>
 
     <div id="gameInfo">
-        <h5>LVL: <span id="currLvl"></span></h5>
+        <h3>Health: <span id="yourHealth"></span> </h3>
+        <h5>LVL: <span class="currLvl"></span></h5>
     </div>
+
+    <section id="upgradeModal">
+        <p>Current Level: <span class="currLvl">1</span></p>
+        <p>Wallet: <span id="currWallet"></span> </p>
+        <p>Player Health</p>
+        <button class="upgrade" id="upgradeHealth"><span id="healthCost">0</span></button>
+        <p>Player Damage</p>
+        <button class="upgrade" id="upgradeDamage"><span id="damageCost">0</span></button>
+    </section>
 
 
     <script src="util.js"></script>
+    <script src="turret.js"></script>
     <script src="zombie.js"></script>
     <script src="player.js"></script>
     <script src="game.js"></script>

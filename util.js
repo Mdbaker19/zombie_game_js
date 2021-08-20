@@ -3,6 +3,15 @@ const cc = c.getContext("2d");
 const widthBound = c.width;
 const heightBound = c.height;
 
+const levelText = Array.from(document.getElementsByClassName("currLvl"));
+const yourHealthText = document.getElementById("yourHealth");
+const yourWallet = document.getElementById("currWallet");
+const upgradeHP = document.getElementById("upgradeHealth");
+const upgradeDmg = document.getElementById("upgradeDamage");
+const healthUpgradeCost = document.getElementById("healthCost");
+const damageUpgradeCost = document.getElementById("damageCost");
+
+
 function fill(x, y, w, h, c) {
     cc.fillStyle = c;
     cc.fillRect(x, y, w, h);
@@ -67,11 +76,11 @@ function getRandomZombieSpawnLocationOOB(){
     }
 }
 
-function removeBullet(bulletArr, bulletID) {
-    for(let i = bulletArr.length - 1; i >= 0; i--) {
-        if(bulletArr[i].id === bulletID) bulletArr.splice(i, 1);
+function removeObj(objArr, bulletID) {
+    for(let i = objArr.length - 1; i >= 0; i--) {
+        if(objArr[i].id === bulletID) objArr.splice(i, 1);
     }
-    return bulletArr;
+    return objArr;
 }
 
 // probably not necessary but the bullet thing was really annoying
@@ -102,9 +111,13 @@ function keepValue(objOne, objTwo) {
     return x / y;
 }
 
-// yeah i doubt this works right now
-function contact(hitX, hitY, hitBoxSize, objX, objY, objSize) {
-    let topToBottomContact = objY > hitY && objY < hitY + hitBoxSize;
-    return (objX < hitX + hitBoxSize && topToBottomContact) ||
-           (objX + objSize > hitX && objX + objSize < hitX + hitBoxSize && topToBottomContact);
+// zombie y pos is the body not the head..
+function contact(hitX, hitY, hitBoxHeight, hitBoxWidth, objX, objY, objHeight, objWidth) {
+    // player will be hitX / Y
+    let isBelow = objY < hitY + hitBoxHeight;
+    let isAbove = hitY < objY + objHeight;
+    let isToLeft = hitX + hitBoxWidth < objX;
+    let isToRight = hitX > objX + objWidth;
+    let inMiddleOf = !isToLeft && !isToRight;
+    return isBelow && isAbove && inMiddleOf;
 }

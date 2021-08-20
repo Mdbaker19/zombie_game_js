@@ -1,0 +1,13 @@
+bullet hit zombie > do something
+zombie health
+player health
+reward for zombie kills
+levels
+different zombie types
+vary zombie rewards
+different weapons
+obstacles? fences to build or something
+turrets [can build and basic functionality added]
+end of round upgrade screen / modal thing [in progress]
+
+zombie movement logic work [in progress]
